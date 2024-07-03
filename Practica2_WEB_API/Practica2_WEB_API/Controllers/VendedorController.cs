@@ -23,7 +23,7 @@ namespace Practica2_WEB_API.Controllers
                 if (result > 0)
                 {
                     resp.Codigo = 1;
-                    resp.Mensaje = "Ok";
+                    resp.Mensaje = "El vendedor fue registrado exitosamente";
                     resp.Contenido = true;
                     return Ok(resp);
                 }
@@ -32,7 +32,7 @@ namespace Practica2_WEB_API.Controllers
                     resp.Codigo = 0;
                     resp.Mensaje = "La informacion del vendedor ya se encuentra registrada";
                     resp.Contenido = false;
-                    return Ok("Error");
+                    return Ok(resp);
                 }
                     
             }
