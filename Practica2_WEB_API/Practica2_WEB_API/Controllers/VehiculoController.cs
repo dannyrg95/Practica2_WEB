@@ -41,22 +41,29 @@ namespace Practica2_WEB_API.Controllers
 
         [HttpGet]
         [Route("ConsultarVehiculos")]
-        public async Task<IActionResult> ConsultarVehiculos(string cedulaVendedor = null, string nombreVendedor = null, string marca = null, string modelo = null)
+        public async Task<IActionResult> ConsultarVehiculos()
         {
+            Respuesta resp = new Respuesta();
+
             using (var context = new SqlConnection("Server=LIED95\\SQLEXPRESS;Database=Practica2;Trusted_Connection=True;TrustServerCertificate=True"))
             {
-                try
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@CedulaVendedor", cedulaVendedor);
-                    parameters.Add("@NombreVendedor", nombreVendedor);
-                    parameters.Add("@Marca", marca);
-                    parameters.Add("@Modelo", modelo);
+                var result = await context.QueryAsync<Vehiculo>("ConsultarVehiculos", 
+                    new {  },
+            commandType: System.Data.CommandType.StoredProcedure);
 
-                }
-                catch (SqlException ex)
+                if (result.Count() > 0)
                 {
-                    return StatusCode(500, $"Error SQL: {ex.Message}");
+                    resp.Codigo = 1;
+                    resp.Mensaje = "Ok";
+                    resp.Contenido = result;
+                    return Ok(resp);
+                }
+                else
+                {
+                    resp.Codigo = 0;
+                    resp.Mensaje = "Este vehiculo no se encuentra registrado";
+                    resp.Contenido = false;
+                    return Ok(resp);
                 }
             }
         }

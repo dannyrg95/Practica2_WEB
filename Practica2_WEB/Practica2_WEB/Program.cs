@@ -1,7 +1,13 @@
+using Practica2_WEB.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IVendedorModel, VendedorModel>();
+builder.Services.AddScoped<IVehiculoModel, VehiculoModel>();
 
 var app = builder.Build();
 
